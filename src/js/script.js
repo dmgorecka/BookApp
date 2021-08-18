@@ -81,14 +81,54 @@
           else{
             image.classList.remove(classNames.book.favorite);
             thisBooksList.favoriteBooks = thisBooksList.favoriteBooks.filter(id => id !== bookID);
-
-
           }
-
         });
-
       }
+      thisBooksList.filterForm.addEventListener('change', function(event) {
+        event.preventDefault();
+        console.log('event: ', event);
+        if(event.tagName == 'INPUT'
+        && event.type == 'checkbox'
+        && event.name == 'filter') {
 
+          if(event.checked == true
+            && !thisBooksList.filters.includes(event.value)) {
+            thisBooksList.filters.push(event.value);
+            thisBooksList.bookFilter();
+
+          } else if(event.checked == false) {
+            const index = thisBooksList.filters.indexOf(event.value);
+            thisBooksList.filters.splice(index, 1);
+            thisBooksList.bookFilter();
+          }
+          console.log('thisBooksList.filters: ', thisBooksList.filters);
+        }
+      });
+    }
+    bookFilter() {
+      // filtracja nie działa
+      const thisBookList = this;
+
+      for(let book of thisBookList.data.books) {
+        let shouldBeHidden = false;
+        for(let filter of thisBookList.filters) {
+          console.log('filter: ', filter);
+          if(!book.details[filter]) {
+            console.log('book.details: ', book.details);
+            console.log('book.details[filter]: ', book.details[filter]);
+            shouldBeHidden = true;
+            break;
+          }
+        }
+
+        const bookImg = document.querySelector('.book__image[data-id=' + '"' + book.id + '"]');
+
+        if(shouldBeHidden) {
+          bookImg.classList.add(classNames.book.hiddenBook);
+        } else {
+          bookImg.classList.remove(classNames.book.hiddenBook);
+        }
+      }
     }
   }
 
