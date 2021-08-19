@@ -86,22 +86,21 @@
       }
       thisBooksList.filterForm.addEventListener('change', function(event) {
         event.preventDefault();
-        console.log('event: ', event);
-        if(event.tagName == 'INPUT'
-        && event.type == 'checkbox'
-        && event.name == 'filter') {
+        
+        if(thisBooksList.filterForm.tagName == 'INPUT'
+        && thisBooksList.filterForm.type == 'checkbox'
+        && thisBooksList.filterForm.name == 'filter') {
 
-          if(event.checked == true
-            && !thisBooksList.filters.includes(event.value)) {
-            thisBooksList.filters.push(event.value);
+          if(thisBooksList.filterForm.checked == true
+            && !thisBooksList.filters.includes(thisBooksList.filterForm.value)) {
+            thisBooksList.filters.push(thisBooksList.filterForm.value);
             thisBooksList.bookFilter();
 
-          } else if(event.checked == false) {
-            const index = thisBooksList.filters.indexOf(event.value);
+          } else if(thisBooksList.filterForm.checked == false) {
+            const index = thisBooksList.filters.indexOf(thisBooksList.filterForm.value);
             thisBooksList.filters.splice(index, 1);
             thisBooksList.bookFilter();
           }
-          console.log('thisBooksList.filters: ', thisBooksList.filters);
         }
       });
     }
